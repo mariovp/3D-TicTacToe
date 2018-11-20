@@ -1,7 +1,6 @@
 package com.valpa;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class CubeIndex {
 
@@ -21,7 +20,11 @@ public class CubeIndex {
             positionToCoordinates3DMap.put(position, coordinates3D);
         }
 
-        return positionToCoordinates3DMap.get(position);
+        Coordinates3D coordinates3D = positionToCoordinates3DMap.get(position);
+        System.out.println("Position = "+position);
+        System.out.println("Coordinates = "+coordinates3D);
+
+        return coordinates3D;
     }
 
 }

@@ -4,16 +4,19 @@ public class Main {
 
     public static void main(String[] args) {
 
-        /*var board3d = new Board3D();
-
-        board3d.init();*/
-
-        //var winningFlatCoordinates = new WinningFlatCoordinates();
-        //winningFlatCoordinates.init();
-
+        var board3d = new Board3D();
+        var winningPositions = new WinningLinesPositions();
         var cubeIndex = new CubeIndex();
 
-        System.out.println(cubeIndex.getCoordinates3DFromPosition(38));
+        System.out.println(winningPositions.toString());
+
+        //var evaluationFunction = new EvaluationFunction(cubeIndex, winningFlatCoordinates);
+
+        //int points = evaluationFunction.evaluate(board3d);
+
+        //System.out.println("Evaluation = "+points);
+
+        //System.out.println(cubeIndex.getCoordinates3DFromPosition(38));
     }
 
 }

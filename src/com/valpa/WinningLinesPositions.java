@@ -1,11 +1,13 @@
 package com.valpa;
 
-public class WinningPositions {
+import java.util.StringJoiner;
 
-    private int[][] winningPositionsArray = new int[76][];
+public class WinningLinesPositions {
+
+    private int[][] winningLinesPositionArray = new int[76][];
 
     @SuppressWarnings("UnnecessaryLocalVariable")
-    public WinningPositions() {
+    public WinningLinesPositions() {
         /* Generar combinaciones ganadoras en una sola capa que se encuentran en una misma capa*/
 
         // Contador de combinaciones
@@ -21,14 +23,14 @@ public class WinningPositions {
                 int columnOffset = n;
 
                 // Lineas horizontales
-                winningPositionsArray[count++] = new int[]{
+                winningLinesPositionArray[count++] = new int[]{
                         layerOffset + rowOffset,
                         1 + layerOffset + rowOffset,
                         2 + layerOffset + rowOffset,
                         3 + layerOffset + rowOffset};
 
                 // Lineas verticales
-                winningPositionsArray[count++] = new int[]{
+                winningLinesPositionArray[count++] = new int[]{
                         layerOffset + columnOffset,
                         4 + layerOffset + columnOffset,
                         8 + layerOffset + columnOffset,
@@ -36,13 +38,13 @@ public class WinningPositions {
             }
 
             // Generar las 2 diagonales de cada capa
-            winningPositionsArray[count++] = new int[]{
+            winningLinesPositionArray[count++] = new int[]{
                     layerOffset,
                     5 + layerOffset,
                     10 + layerOffset,
                     15 + layerOffset};
 
-            winningPositionsArray[count++] = new int[]{
+            winningLinesPositionArray[count++] = new int[]{
                     12 + layerOffset,
                     9 + layerOffset,
                     6 + layerOffset,
@@ -53,7 +55,7 @@ public class WinningPositions {
 
         // Combinaciones de fondo (16 combinaciones)
         for (int i = 0; i < 16; i++) {
-            winningPositionsArray[count++] = new int[]{
+            winningLinesPositionArray[count++] = new int[]{
                     i,
                     16 + i,
                     32 + i,
@@ -67,26 +69,26 @@ public class WinningPositions {
             int columnOffset = n;
 
             // Diagonales horizontales  entre capas
-            winningPositionsArray[count++] = new int[]{
+            winningLinesPositionArray[count++] = new int[]{
                     rowOffset,
                     17 + rowOffset,
                     34 + rowOffset,
                     51 + rowOffset};
 
-            winningPositionsArray[count++] = new int[]{
+            winningLinesPositionArray[count++] = new int[]{
                     3 + rowOffset,
                     18 + rowOffset,
                     33 + rowOffset,
                     48 + rowOffset};
 
             // Diagonales verticales  entre capas
-            winningPositionsArray[count++] = new int[]{
+            winningLinesPositionArray[count++] = new int[]{
                     columnOffset,
                     20 + columnOffset,
                     40 + columnOffset,
                     60 + columnOffset};
 
-            winningPositionsArray[count++] = new int[]{
+            winningLinesPositionArray[count++] = new int[]{
                     12 + columnOffset,
                     24 + columnOffset,
                     36 + columnOffset,
@@ -94,39 +96,52 @@ public class WinningPositions {
         }
 
         // Diagonales entre esquinas del cubo (4 combinaciones)
-        winningPositionsArray[count++] = new int[]{
+        winningLinesPositionArray[count++] = new int[]{
                 0,
                 21,
                 42,
                 63};
 
-        winningPositionsArray[count++] = new int[]{
+        winningLinesPositionArray[count++] = new int[]{
                 12,
                 25,
                 38,
                 51};
 
-        winningPositionsArray[count++] = new int[]{
+        winningLinesPositionArray[count++] = new int[]{
                 3,
                 22,
                 41,
                 60};
 
-        winningPositionsArray[count++] = new int[]{
+        winningLinesPositionArray[count++] = new int[]{
                 15,
                 26,
                 37,
                 48};
-
-        int index = 0;
-        for (int[] ints : winningPositionsArray) {
-            System.out.println("("+(index++)+")"+" { "+ints[0]+", "+ints[1]+", "+ints[2]+", "+ints[3]+" }");
-        }
-
-        //System.out.println(winningPositionsArray);
     }
 
-    public int[][] getWinningPositionsArray() {
-        return winningPositionsArray;
+    public int[][] getWinningLinesPositionArray() {
+        return winningLinesPositionArray;
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int index = 0;
+        for (int[] posArray : winningLinesPositionArray) {
+
+            StringJoiner stringJoiner = new StringJoiner(", ","{ "," }");
+
+            for (int pos : posArray) {
+                stringJoiner.add(String.valueOf(pos));
+            }
+
+            stringBuilder.append("(").append(index++).append(") ").append(stringJoiner.toString()).append("\n");
+        }
+
+        return stringBuilder.toString();
     }
 }
