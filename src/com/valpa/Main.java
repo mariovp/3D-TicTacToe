@@ -5,16 +5,16 @@ public class Main {
     public static void main(String[] args) {
 
         var board3d = new Board3D();
-        var winningPositions = new WinningLinesPositions();
+        var winningLinesPositions = new WinningLinesPositions();
         var cubeIndex = new CubeIndex();
 
-        System.out.println(winningPositions.toString());
+        //System.out.println(winningLinesPositions.toString());
 
-        //var evaluationFunction = new EvaluationFunction(cubeIndex, winningFlatCoordinates);
+        var evaluationFunction = new EvaluationFunction(cubeIndex, winningLinesPositions);
 
-        //int points = evaluationFunction.evaluate(board3d);
+        int points = evaluationFunction.evaluate(board3d);
 
-        //System.out.println("Evaluation = "+points);
+        System.out.println("Evaluation = "+points);
 
         //System.out.println(cubeIndex.getCoordinates3DFromPosition(38));
     }

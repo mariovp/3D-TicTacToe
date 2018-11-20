@@ -13,6 +13,7 @@ public class Board3D {
             }
         }
         cubeMatrix[0][1][2] = CubeCell.CROSS;
+        //cubeMatrix[0][1][3] = CubeCell.CROSS;
         cubeMatrix[0][1][1] = CubeCell.CIRCLE;
     }
 
@@ -28,7 +29,6 @@ public class Board3D {
     }
 
     public CubeCell getCubeCell(Coordinates3D coordinates3D) {
-        //System.out.println(coordinates3D);
         return getCubeCell(coordinates3D.getZ(), coordinates3D.getY(), coordinates3D.getX());
     }
 

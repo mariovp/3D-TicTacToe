@@ -11,14 +11,21 @@ public class EvaluationFunction {
     }
 
     public int evaluate(Board3D board3D) {
+
         int points = 0;
         for (int[] line : winningLinesPositions.getWinningLinesPositionArray()) {
+
+            int lineCoincidences = 0;
             for (int pos : line) {
                 Coordinates3D coordinates3D = cubeIndex.getCoordinates3DFromPosition(pos);
                 CubeCell cubeCell = board3D.getCubeCell(coordinates3D);
+
                 if (cubeCell == CubeCell.CROSS)
-                    points++;
+                    lineCoincidences++;
             }
+
+            if (lineCoincidences > points)
+                points = lineCoincidences;
         }
         return points;
     }
