@@ -28,4 +28,8 @@ public class Coordinates3D {
         return x;
     }
 
+    @Override
+    public String toString() {
+        return "{ Z = "+z+", Y = "+y+", X = "+x+" }";
+    }
 }

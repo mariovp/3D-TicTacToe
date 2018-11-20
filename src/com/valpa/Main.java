@@ -12,6 +12,8 @@ public class Main {
         //winningFlatCoordinates.init();
 
         var cubeIndex = new CubeIndex();
+
+        System.out.println(cubeIndex.getCoordinates3DFromPosition(38));
     }
 
 }

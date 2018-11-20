@@ -14,7 +14,7 @@ public class CubeIndex {
 
         if (!positionToCoordinates3DMap.containsKey(position)) {
             int z = position / layerCubeCount;
-            int y = position / squareSide;
+            int y = (position - (z * layerCubeCount) ) / squareSide;
             int x = position % squareSide;
 
             var coordinates3D = new Coordinates3D(z, y, x);
