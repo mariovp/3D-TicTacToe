@@ -1,12 +1,12 @@
 package com.valpa;
 
-public enum CellStatus {
+public enum CubeCell {
 
     EMPTY(" . "), CROSS(" x "), CIRCLE(" o ");
 
     private String string;
 
-    CellStatus(String string) {
+    CubeCell(String string) {
         this.string = string;
     }
 
@@ -14,4 +14,5 @@ public enum CellStatus {
     public String toString() {
         return string;
     }
+
 }

@@ -4,18 +4,18 @@ import java.util.Arrays;
 
 public class Board3D {
 
-    private CellStatus[][][] cubeMatrix = new CellStatus[4][4][4];
+    private CubeCell[][][] cubeMatrix = new CubeCell[4][4][4];
 
     public void init() {
 
-        for (CellStatus[][] matrix2d : cubeMatrix) {
-            for (CellStatus[] array : matrix2d) {
-                Arrays.fill(array, CellStatus.EMPTY);
+        for (CubeCell[][] matrix2d : cubeMatrix) {
+            for (CubeCell[] array : matrix2d) {
+                Arrays.fill(array, CubeCell.EMPTY);
             }
         }
 
-        cubeMatrix[0][1][2] = CellStatus.CROSS;
-        cubeMatrix[0][1][1] = CellStatus.CIRCLE;
+        cubeMatrix[0][1][2] = CubeCell.CROSS;
+        cubeMatrix[0][1][1] = CubeCell.CIRCLE;
 
         print();
     }
@@ -30,11 +30,11 @@ public class Board3D {
         StringBuilder stringBuilder = new StringBuilder();
 
         int index = 0;
-        for (CellStatus[][] matrix2d : cubeMatrix) {
+        for (CubeCell[][] matrix2d : cubeMatrix) {
             stringBuilder.append("\tCapa ").append(index++).append("\n");
-            for (CellStatus[] array : matrix2d) {
-                for (CellStatus cellStatus : array) {
-                    stringBuilder.append(cellStatus.toString());
+            for (CubeCell[] array : matrix2d) {
+                for (CubeCell cubeCellStatus : array) {
+                    stringBuilder.append(cubeCellStatus.toString());
                 }
                 stringBuilder.append("\n");
             }

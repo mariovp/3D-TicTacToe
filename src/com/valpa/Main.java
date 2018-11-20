@@ -8,10 +8,10 @@ public class Main {
 
         board3d.init();*/
 
-        var winningFlatCoordinates = new WinningFlatCoordinates();
+        //var winningFlatCoordinates = new WinningFlatCoordinates();
+        //winningFlatCoordinates.init();
 
-        winningFlatCoordinates.init();
-
+        var cubeIndex = new CubeIndex();
     }
 
 }
