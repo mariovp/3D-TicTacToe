@@ -6,11 +6,10 @@ public class Main {
 
         var board3d = new Board3D();
         var winningLinesPositions = new WinningLinesPositions();
-        var cubeIndex = new CubeIndex();
 
         //System.out.println(winningLinesPositions.toString());
 
-        var evaluationFunction = new EvaluationFunction(cubeIndex, winningLinesPositions);
+        var evaluationFunction = new EvaluationFunction(winningLinesPositions);
 
         int points = evaluationFunction.evaluate(board3d);
 

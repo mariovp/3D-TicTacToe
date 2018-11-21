@@ -1,12 +1,12 @@
 package com.valpa;
 
-public enum CubeCell {
+public enum Cell {
 
     EMPTY(" . "), CROSS(" x "), CIRCLE(" o ");
 
     private String string;
 
-    CubeCell(String string) {
+    Cell(String string) {
         this.string = string;
     }
 

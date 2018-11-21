@@ -2,11 +2,9 @@ package com.valpa;
 
 public class EvaluationFunction {
 
-    private CubeIndex cubeIndex;
     private WinningLinesPositions winningLinesPositions;
 
-    public EvaluationFunction(CubeIndex cubeIndex, WinningLinesPositions winningLinesPositions) {
-        this.cubeIndex = cubeIndex;
+    public EvaluationFunction(WinningLinesPositions winningLinesPositions) {
         this.winningLinesPositions = winningLinesPositions;
     }
 
@@ -17,10 +15,9 @@ public class EvaluationFunction {
 
             int lineCoincidences = 0;
             for (int pos : line) {
-                Coordinates3D coordinates3D = cubeIndex.getCoordinates3DFromPosition(pos);
-                CubeCell cubeCell = board3D.getCubeCell(coordinates3D);
 
-                if (cubeCell == CubeCell.CROSS)
+                Cell cell = board3D.getCubeCell(pos);
+                if (cell == Cell.CROSS)
                     lineCoincidences++;
             }
 
