@@ -2,7 +2,6 @@ package com.valpa;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AiPlayer implements Player {
@@ -27,48 +26,32 @@ public class AiPlayer implements Player {
     }
 
     private PlayerMove miniMax() {
-        int lookAhead = 2;
-        return max(board3D, 0, lookAhead);
+        int lookAhead = 3;
+        return miniMax(board3D, 0, lookAhead,false);
     }
 
-    private PlayerMove mini(Board3D currentBoard, int movePosition, int lookAhead) {
+    private PlayerMove miniMax(Board3D currentBoard, int movePosition, int lookAhead, boolean isEnemyTurn) {
 
         if (lookAhead == 0) {
-            Board3D newBoard = Board3D.createBoardWithMove(board3D, movePosition, enemySymbol);
-            int points = evaluationFunction.evaluate(newBoard, symbol);
-            return new PlayerMove(enemySymbol, movePosition, points);
+            Symbol moveSymbol = isEnemyTurn ? enemySymbol : symbol;
+            Board3D newBoard = Board3D.createBoardWithMove(currentBoard, movePosition, moveSymbol);
+            int points = evaluationFunction.evaluate(newBoard, moveSymbol);
+            return new PlayerMove(movePosition, points);
         }
 
         List<Integer> freePositionList = currentBoard.getFreePositionList();
 
         List<PlayerMove> playerMoveList = freePositionList.stream().map(position -> {
-            return max(currentBoard, position, lookAhead - 1);
+            return miniMax(currentBoard, position, lookAhead-1, !isEnemyTurn);
         }).collect(Collectors.toList());
 
-        Optional<PlayerMove> minMove = playerMoveList.stream()
-                .min(Comparator.comparingInt(PlayerMove::getPoints));
-
-        return minMove.get();
-    }
-
-    private PlayerMove max(Board3D currentBoard, int movePosition, int lookAhead) {
-
-        if (lookAhead == 0) {
-            Board3D newBoard = Board3D.createBoardWithMove(board3D, movePosition, symbol);
-            int points = evaluationFunction.evaluate(newBoard, symbol);
-            return new PlayerMove(symbol, movePosition, points);
+        if (isEnemyTurn) {
+            return playerMoveList.stream()
+                    .min(Comparator.comparingInt(PlayerMove::getPoints)).get();
+        } else {
+            return playerMoveList.stream()
+                    .max(Comparator.comparingInt(PlayerMove::getPoints)).get();
         }
-
-        List<Integer> freePositionList = currentBoard.getFreePositionList();
-
-        List<PlayerMove> playerMoveList = freePositionList.stream().map(position -> {
-            return mini(currentBoard, position, lookAhead - 1);
-        }).collect(Collectors.toList());
-
-        PlayerMove maxMove = playerMoveList.stream()
-                .max(Comparator.comparingInt(PlayerMove::getPoints)).get();
-
-        return maxMove;
     }
 
 }

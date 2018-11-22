@@ -20,8 +20,15 @@ public class Main {
         var board3D = new Board3D();
         var aiPlayer = new AiPlayer(board3D, Symbol.CROSS);
 
-        var aiPlayerMove = aiPlayer.makeMove();
-        System.out.println(aiPlayerMove);
+        var move1 = aiPlayer.makeMove();
+        System.out.println(move1);
+        board3D.setCell(move1.getPosition(), Symbol.CROSS);
+        System.out.println(board3D);
+
+        var move2 = aiPlayer.makeMove();
+        System.out.println(move2);
+        board3D.setCell(move2.getPosition(), Symbol.CROSS);
+        System.out.println(board3D);
 
     }
 

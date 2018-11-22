@@ -21,7 +21,7 @@ public class Board3D {
     }
 
     public Board3D(Symbol[] cubeArray, List<Integer> freePositionList) {
-        this.cubeArray = cubeArray;
+        this.cubeArray = Arrays.copyOf(cubeArray, 64);
         this.freePositionList = new ArrayList<>(freePositionList);
     }
 
@@ -32,7 +32,6 @@ public class Board3D {
         Arrays.fill(cubeArray, Symbol.EMPTY);
         setCell(Coordinates3D.create(0, 0, 0), Symbol.CROSS);
         setCell(Coordinates3D.create(1, 0, 0), Symbol.CROSS);
-        setCell(Coordinates3D.create(2, 0, 0), Symbol.CROSS);
         setCell(Coordinates3D.create(0, 2, 0), Symbol.CROSS);
         setCell(Coordinates3D.create(0, 1, 1), Symbol.CIRCLE);
         System.out.println(toString());
