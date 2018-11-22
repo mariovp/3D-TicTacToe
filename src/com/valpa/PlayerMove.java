@@ -21,7 +21,7 @@ public class PlayerMove {
     @Override
     public String toString() {
         return "PlayerMove{" +
-                ", position=" + position +
+                "position=" + position +
                 ", points=" + points +
                 '}';
     }

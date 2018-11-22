@@ -30,11 +30,11 @@ public class Board3D {
         freePositionList = IntStream.rangeClosed(0, n-1).boxed().collect(Collectors.toList());
 
         Arrays.fill(cubeArray, Symbol.EMPTY);
-        setCell(Coordinates3D.create(0, 0, 0), Symbol.CROSS);
+        /*setCell(Coordinates3D.create(0, 0, 0), Symbol.CROSS);
         setCell(Coordinates3D.create(1, 0, 0), Symbol.CROSS);
         setCell(Coordinates3D.create(0, 2, 0), Symbol.CROSS);
         setCell(Coordinates3D.create(0, 1, 1), Symbol.CIRCLE);
-        System.out.println(toString());
+        System.out.println(toString());*/
     }
 
     public void setCell(Coordinates3D coordinates3D, Symbol symbol) {

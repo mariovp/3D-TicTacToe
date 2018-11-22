@@ -35,7 +35,7 @@ public class AiPlayer implements Player {
         if (lookAhead == 0) {
             Symbol moveSymbol = isEnemyTurn ? enemySymbol : symbol;
             Board3D newBoard = Board3D.createBoardWithMove(currentBoard, movePosition, moveSymbol);
-            int points = evaluationFunction.evaluate(newBoard, moveSymbol);
+            int points = evaluationFunction.evaluate(newBoard, symbol, enemySymbol);
             return new PlayerMove(movePosition, points);
         }
 

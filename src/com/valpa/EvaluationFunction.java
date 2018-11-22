@@ -8,8 +8,14 @@ public class EvaluationFunction {
         this.winningLinesPositions = winningLinesPositions;
     }
 
-    public int evaluate(Board3D board3D, Symbol aiPlayerSymbol) {
+    public int evaluate(Board3D board3D, Symbol aiPlayerSymbol, Symbol enemySymbol) {
+        int aiPoints = evaluate(board3D, aiPlayerSymbol);
+        int enemyPoints = evaluate(board3D, enemySymbol);
 
+        return aiPoints-enemyPoints;
+    }
+
+    private int evaluate(Board3D board3D, Symbol playerSymbol) {
         int points = 0;
         for (int[] line : winningLinesPositions.getWinningLinesPositionArray()) {
 
@@ -17,7 +23,7 @@ public class EvaluationFunction {
             for (int pos : line) {
 
                 Symbol symbol = board3D.getCubeCell(pos);
-                if (symbol == aiPlayerSymbol)
+                if (symbol == playerSymbol)
                     lineCoincidences++;
             }
 

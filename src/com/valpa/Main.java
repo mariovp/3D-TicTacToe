@@ -18,9 +18,24 @@ public class Main {
         //System.out.println(cubeIndex.getCoordinates3DFromPosition(38));
 
         var board3D = new Board3D();
-        var aiPlayer = new AiPlayer(board3D, Symbol.CROSS);
+        System.out.println(board3D);
 
-        var move1 = aiPlayer.makeMove();
+        var aiPlayer = new AiPlayer(board3D, Symbol.CROSS);
+        var aiPlayer2 = new AiPlayer(board3D, Symbol.CIRCLE);
+
+        for (int i = 0; i < 4; i++) {
+            var move1 = aiPlayer.makeMove();
+            System.out.println(move1);
+            board3D.setCell(move1.getPosition(), Symbol.CROSS);
+            System.out.println(board3D);
+
+            var move2 = aiPlayer2.makeMove();
+            System.out.println(move2);
+            board3D.setCell(move2.getPosition(), Symbol.CIRCLE);
+            System.out.println(board3D);
+        }
+
+        /*var move1 = aiPlayer.makeMove();
         System.out.println(move1);
         board3D.setCell(move1.getPosition(), Symbol.CROSS);
         System.out.println(board3D);
@@ -28,7 +43,7 @@ public class Main {
         var move2 = aiPlayer.makeMove();
         System.out.println(move2);
         board3D.setCell(move2.getPosition(), Symbol.CROSS);
-        System.out.println(board3D);
+        System.out.println(board3D);*/
 
     }
 
