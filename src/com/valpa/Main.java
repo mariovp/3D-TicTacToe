@@ -15,7 +15,7 @@ public class Main {
         var aiPlayer = new AiPlayer(board3D, Symbol.CROSS);
         var aiPlayer2 = new HumanPlayer(Symbol.CIRCLE);
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 20; i++) {
             var move1 = aiPlayer.makeMove();
             System.out.println(move1);
             board3D.setCell(move1.getPosition(), Symbol.CROSS);
@@ -26,6 +26,8 @@ public class Main {
             board3D.setCell(move2.getPosition(), Symbol.CIRCLE);
             System.out.println(board3D);
         }
+
+        System.out.println("Fin de los turnos");
 
     }
 

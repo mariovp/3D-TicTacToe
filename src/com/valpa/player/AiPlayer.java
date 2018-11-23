@@ -26,9 +26,9 @@ public class AiPlayer extends Player {
     }
 
     private PlayerMove miniMax() {
-        int lookAhead = 3;
+        int lookAhead = 2;
         // Funciona con lookahead impar y enemyTurn true, o lookahead par y enemyTurn false
-        return min(board3D,0,lookAhead);
+        return max(board3D,0,lookAhead);
     }
 
     /*private PlayerMove miniMax(Board3D currentBoard, int movePosition, int lookAhead, boolean isEnemyTurn) {
