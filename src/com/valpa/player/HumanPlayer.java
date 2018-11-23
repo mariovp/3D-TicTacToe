@@ -1,4 +1,6 @@
-package com.valpa;
+package com.valpa.player;
+
+import com.valpa.board.Symbol;
 
 import java.util.Scanner;
 

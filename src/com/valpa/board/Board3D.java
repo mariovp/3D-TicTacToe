@@ -1,4 +1,4 @@
-package com.valpa;
+package com.valpa.board;
 
 import java.util.ArrayList;
 import java.util.Arrays;

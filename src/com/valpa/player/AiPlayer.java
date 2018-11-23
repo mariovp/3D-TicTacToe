@@ -1,4 +1,8 @@
-package com.valpa;
+package com.valpa.player;
+
+import com.valpa.board.Board3D;
+import com.valpa.board.Symbol;
+import com.valpa.board.WinningLinesPositions;
 
 import java.util.Comparator;
 import java.util.List;

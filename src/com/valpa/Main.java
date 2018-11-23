@@ -1,5 +1,10 @@
 package com.valpa;
 
+import com.valpa.board.Board3D;
+import com.valpa.board.Symbol;
+import com.valpa.player.AiPlayer;
+import com.valpa.player.HumanPlayer;
+
 public class Main {
 
     public static void main(String[] args) {

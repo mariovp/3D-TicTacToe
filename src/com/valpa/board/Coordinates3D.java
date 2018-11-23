@@ -1,4 +1,4 @@
-package com.valpa;
+package com.valpa.board;
 
 public class Coordinates3D {
 

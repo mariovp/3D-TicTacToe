@@ -1,4 +1,4 @@
-package com.valpa;
+package com.valpa.player;
 
 public class PlayerMove {
 
