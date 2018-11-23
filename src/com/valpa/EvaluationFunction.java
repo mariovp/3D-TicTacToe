@@ -12,7 +12,8 @@ public class EvaluationFunction {
         int aiPoints = evaluate(board3D, aiPlayerSymbol);
         int enemyPoints = evaluate(board3D, enemySymbol);
 
-        return aiPoints-enemyPoints;
+        var eval = aiPoints-enemyPoints;
+        return eval;
     }
 
     private int evaluate(Board3D board3D, Symbol playerSymbol) {
@@ -27,8 +28,16 @@ public class EvaluationFunction {
                     lineCoincidences++;
             }
 
-            if (lineCoincidences > points)
-                points = lineCoincidences;
+            switch (lineCoincidences) {
+                case 1: points +=1;
+                    break;
+                case 2: points +=10;
+                    break;
+                case 3: points += 100;
+                    break;
+                case 4: points += 1000;
+                    break;
+            }
         }
         return points;
     }

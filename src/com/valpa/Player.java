@@ -1,7 +1,15 @@
 package com.valpa;
 
-public interface Player {
+public abstract class Player {
 
-    PlayerMove makeMove();
+    protected Symbol symbol;
+    protected Symbol enemySymbol;
+
+    public Player(Symbol symbol) {
+        this.symbol = symbol;
+        this.enemySymbol = this.symbol == Symbol.CROSS ? Symbol.CIRCLE : Symbol.CROSS;
+    }
+
+    abstract PlayerMove makeMove();
 
 }
