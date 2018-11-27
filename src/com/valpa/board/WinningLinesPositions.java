@@ -4,10 +4,16 @@ import java.util.StringJoiner;
 
 public class WinningLinesPositions {
 
+    private static WinningLinesPositions ourInstance = new WinningLinesPositions();
+
+    public static WinningLinesPositions getInstance() {
+        return ourInstance;
+    }
+
     private int[][] winningLinesPositionArray = new int[76][];
 
     @SuppressWarnings("UnnecessaryLocalVariable")
-    public WinningLinesPositions() {
+    private WinningLinesPositions() {
         /* Generar combinaciones ganadoras en una sola capa que se encuentran en una misma capa*/
 
         // Contador de combinaciones

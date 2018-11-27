@@ -16,8 +16,7 @@ public class AiPlayer extends Player {
     public AiPlayer(Board3D board3D, Symbol symbol) {
         super(symbol);
         this.board3D = board3D;
-        WinningLinesPositions winningLinesPositions = new WinningLinesPositions();
-        this.evaluationFunction = new EvaluationFunction(winningLinesPositions);
+        this.evaluationFunction = new EvaluationFunction(WinningLinesPositions.getInstance());
     }
 
     @Override
@@ -30,30 +29,6 @@ public class AiPlayer extends Player {
         // Funciona con lookahead impar y enemyTurn true, o lookahead par y enemyTurn false
         return max(board3D,0,lookAhead);
     }
-
-    /*private PlayerMove miniMax(Board3D currentBoard, int movePosition, int lookAhead, boolean isEnemyTurn) {
-
-        if (lookAhead == 0) {
-            Symbol moveSymbol = isEnemyTurn ? enemySymbol : symbol;
-            Board3D newBoard = Board3D.createBoardWithMove(currentBoard, movePosition, moveSymbol);
-            int points = evaluationFunction.evaluate(newBoard, symbol, enemySymbol);
-            return new PlayerMove(movePosition, points);
-        }
-
-        List<Integer> freePositionList = currentBoard.getFreePositionList();
-
-        List<PlayerMove> playerMoveList = freePositionList.stream().map(position -> {
-            return miniMax(currentBoard, position, lookAhead-1, !isEnemyTurn);
-        }).collect(Collectors.toList());
-
-        if (isEnemyTurn) {
-            return playerMoveList.stream()
-                    .min(Comparator.comparingInt(PlayerMove::getPoints)).get();
-        } else {
-            return playerMoveList.stream()
-                    .max(Comparator.comparingInt(PlayerMove::getPoints)).get();
-        }
-    }*/
 
     private PlayerMove max(Board3D currentBoard, int movePosition, int lookAhead) {
         if (lookAhead == 0) {
