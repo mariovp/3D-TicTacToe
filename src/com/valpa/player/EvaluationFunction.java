@@ -24,17 +24,17 @@ public class EvaluationFunction {
 
             List<Integer> playerMovePositionsInLine = Arrays.stream(winLine).filter(pos -> {
                 Symbol symbol = board3D.getCubeCell(pos);
-                return symbol == Symbol.CROSS || symbol == Symbol.CIRCLE;
+                return symbol == aiPlayerSymbol || symbol == enemySymbol;
             }).boxed().collect(Collectors.toList());
 
             if (playerMovePositionsInLine.size() > 0) {
-                int crossCount = (int) playerMovePositionsInLine.stream().filter(pos -> board3D.getCubeCell(pos) == Symbol.CROSS).count();
-                int circleCount = (int) playerMovePositionsInLine.stream().filter(pos -> board3D.getCubeCell(pos) == Symbol.CIRCLE).count();
+                int aiPlayerSymbolCount = (int) playerMovePositionsInLine.stream().filter(pos -> board3D.getCubeCell(pos) == aiPlayerSymbol).count();
+                int enemySymbolCount = (int) playerMovePositionsInLine.stream().filter(pos -> board3D.getCubeCell(pos) == enemySymbol).count();
 
-                if (crossCount == 0) {
-                    points += Math.pow(10, circleCount);
-                } else if (circleCount == 0) {
-                    points += Math.pow(10, crossCount);
+                if (enemySymbolCount == 0) {
+                    points -= Math.pow(10, aiPlayerSymbolCount);
+                } else if (aiPlayerSymbolCount == 0) {
+                    points += Math.pow(11, enemySymbolCount);
                 }
 
             }
