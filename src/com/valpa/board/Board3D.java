@@ -58,8 +58,23 @@ public class Board3D {
         return freePositionList.stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
-    private void print() {
-        System.out.println(toString());
+    public boolean checkWin(Symbol symbol) {
+
+        for (int[] posLine : WinningLinesPositions.getInstance().getWinningLinesPositionArray()) {
+
+            int count = 0;
+            for (int pos : posLine) {
+                Symbol boardSymbol = cubeArray[pos];
+                if (boardSymbol != symbol)
+                    break;
+                count++;
+            }
+            if (count == 4)
+                return true;
+
+        }
+
+        return false;
     }
 
     @Override

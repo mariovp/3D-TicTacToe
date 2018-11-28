@@ -20,11 +20,13 @@ public class Main {
             System.out.println(move1);
             board3D.setCell(move1.getPosition(), Symbol.CROSS);
             System.out.println(board3D);
+            System.out.println("Player1 is win = "+board3D.checkWin(Symbol.CROSS));
 
             var move2 = aiPlayer2.makeMove();
             System.out.println(move2);
             board3D.setCell(move2.getPosition(), Symbol.CIRCLE);
             System.out.println(board3D);
+            System.out.println("Player2 is win = "+board3D.checkWin(Symbol.CIRCLE));
         }
 
         System.out.println("Fin de los turnos");
