@@ -21,47 +21,34 @@ public class AiPlayer extends Player {
 
     @Override
     public PlayerMove makeMove() {
-        return miniMax();
+        return negaMax();
     }
 
-    private PlayerMove miniMax() {
-        int lookAhead = 2;
-        // Funciona con lookahead impar y enemyTurn true, o lookahead par y enemyTurn false
-        return max(board3D,0,lookAhead);
+    private PlayerMove negaMax() {
+        return negaMax(board3D, 0, 2,1);
     }
 
-    private PlayerMove max(Board3D currentBoard, int movePosition, int lookAhead) {
-        if (lookAhead == 0) {
-            Board3D newBoard = Board3D.createBoardWithMove(currentBoard, movePosition, symbol);
-            int points = evaluationFunction.evaluate(newBoard, symbol, enemySymbol);
-            return new PlayerMove(movePosition, points);
-        }
-
+    private PlayerMove negaMax(Board3D currentBoard, int movePosition, int lookAhead, int pov) {
         List<Integer> freePositionList = currentBoard.getFreePositionList();
-
-        List<PlayerMove> playerMoveList = freePositionList.stream().map(position -> {
-            return min(currentBoard, position, lookAhead-1);
-        }).collect(Collectors.toList());
-
-        return playerMoveList.stream()
-                .max(Comparator.comparingInt(PlayerMove::getPoints)).get();
-    }
-
-    private PlayerMove min(Board3D currentBoard, int movePosition, int lookAhead) {
-        if (lookAhead == 0) {
+        if (lookAhead == 0 || freePositionList.size() == 0) {
             Board3D newBoard = Board3D.createBoardWithMove(currentBoard, movePosition, enemySymbol);
-            int points = evaluationFunction.evaluate(newBoard, symbol, enemySymbol);
+            int points = pov * evaluationFunction.evaluate(newBoard, symbol, enemySymbol);
             return new PlayerMove(movePosition, points);
         }
 
-        List<Integer> freePositionList = currentBoard.getFreePositionList();
+        List<PlayerMove> playerMoveList = freePositionList.stream().map(position ->
+                negaMax(currentBoard, position, lookAhead-1, -pov)
+        ).collect(Collectors.toList());
 
-        List<PlayerMove> playerMoveList = freePositionList.stream().map(position -> {
-            return max(currentBoard, position, lookAhead-1);
-        }).collect(Collectors.toList());
+        PlayerMove playerMove;
+        if (pov == 1)
+            playerMove = playerMoveList.stream()
+                    .max(Comparator.comparingInt(PlayerMove::getPoints)).get();
+        else
+            playerMove = playerMoveList.stream()
+                    .min(Comparator.comparingInt(PlayerMove::getPoints)).get();
 
-        return playerMoveList.stream()
-                .min(Comparator.comparingInt(PlayerMove::getPoints)).get();
+        return playerMove;
     }
 
 }
