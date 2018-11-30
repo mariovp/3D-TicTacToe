@@ -22,8 +22,10 @@ public class EvaluationFunction {
 
         for (int[] winLine : winningLinesPositions.getWinningLinesPositionArray()) {
 
-            int aiPlayerSymbolCount = (int) Arrays.stream(winLine).filter(position -> board3D.getCubeCell(position) == aiPlayerSymbol).count();
-            int enemySymbolCount = (int) Arrays.stream(winLine).filter(position -> board3D.getCubeCell(position) == enemySymbol).count();
+            int aiPlayerSymbolCount = (int) Arrays.stream(winLine)
+                    .filter(position -> board3D.getCubeCell(position) == aiPlayerSymbol).count();
+            int enemySymbolCount = (int) Arrays.stream(winLine)
+                    .filter(position -> board3D.getCubeCell(position) == enemySymbol).count();
 
             boolean hasAiPlayerPointsOnly = aiPlayerSymbolCount > 0 && enemySymbolCount == 0;
             boolean hasEnemyPointsOnly = enemySymbolCount > 0 && aiPlayerSymbolCount == 0;

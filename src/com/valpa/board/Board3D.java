@@ -20,21 +20,15 @@ public class Board3D {
         return newBoard;
     }
 
-    public Board3D(Symbol[] cubeArray, List<Integer> freePositionList) {
-        this.cubeArray = Arrays.copyOf(cubeArray, 64);
+    private Board3D(Symbol[] cubeArray, List<Integer> freePositionList) {
+        this.cubeArray = Arrays.copyOf(cubeArray, n);
         this.freePositionList = new ArrayList<>(freePositionList);
     }
 
     public Board3D() {
         cubeArray = new Symbol[n];
         freePositionList = IntStream.rangeClosed(0, n-1).boxed().collect(Collectors.toList());
-
         Arrays.fill(cubeArray, Symbol.EMPTY);
-        /*setCell(Coordinates3D.create(0, 0, 0), Symbol.CROSS);
-        setCell(Coordinates3D.create(1, 0, 0), Symbol.CROSS);
-        setCell(Coordinates3D.create(0, 2, 0), Symbol.CROSS);
-        setCell(Coordinates3D.create(0, 1, 1), Symbol.CIRCLE);
-        System.out.println(toString());*/
     }
 
     public void setCell(Coordinates3D coordinates3D, Symbol symbol) {
@@ -46,8 +40,11 @@ public class Board3D {
     }
 
     public void setCell(int position, Symbol symbol) {
-        cubeArray[position] = symbol;
-        freePositionList.remove((Integer)position);
+        if (cubeArray[position] == Symbol.EMPTY) {
+            cubeArray[position] = symbol;
+            freePositionList.remove((Integer)position);
+        } else
+            throw new RuntimeException("La celda ya está ocupada");
     }
 
     public Symbol getCubeCell(int position) {

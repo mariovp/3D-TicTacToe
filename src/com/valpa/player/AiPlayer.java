@@ -25,6 +25,8 @@ public class AiPlayer extends Player {
     }
 
     private PlayerMove negaMax() {
+        if (board3D.getFreePositionList().isEmpty())
+            throw new RuntimeException("El tablero está lleno, no se puede hacer movimiento");
         return negaMax(board3D, 0, 2, 1);
     }
 
@@ -32,7 +34,7 @@ public class AiPlayer extends Player {
 
         List<Integer> freePositionList = currentBoard.getFreePositionList();
 
-        if (lookAhead == 0 || freePositionList.size() == 0) {
+        if (lookAhead == 0 || freePositionList.isEmpty()) {
             Board3D newBoard = Board3D.createBoardWithMove(currentBoard, movePosition, enemySymbol);
             int points = pov * evaluationFunction.evaluate(newBoard, symbol, enemySymbol);
             return new PlayerMove(movePosition, points);
