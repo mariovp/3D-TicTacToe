@@ -3,9 +3,7 @@ package com.valpa;
 import com.valpa.board.Board3D;
 import com.valpa.board.Symbol;
 import com.valpa.board.WinningLinesPositions;
-import com.valpa.player.AiPlayer;
-import com.valpa.player.EvaluationFunction;
-import com.valpa.player.HumanPlayer;
+import com.valpa.player.*;
 
 public class Main {
 
@@ -29,10 +27,10 @@ public class Main {
 
         System.out.println("Puntos = "+points);*/
 
-        var aiPlayer = new AiPlayer(board3D, Symbol.CROSS);
-        var aiPlayer2 = new HumanPlayer(Symbol.CIRCLE);
+        var aiPlayer = new AiPlayer(board3D, Symbol.CROSS, PlayerStrategy.ATTACK);
+        var aiPlayer2 = new AiPlayer(board3D, Symbol.CIRCLE, PlayerStrategy.DEFENSE);
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 32; i++) {
             var move1 = aiPlayer.makeMove();
             System.out.println(move1);
             board3D.setCell(move1.getPosition(), Symbol.CROSS);

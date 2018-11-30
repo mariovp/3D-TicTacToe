@@ -9,9 +9,11 @@ import java.util.Arrays;
 public class EvaluationFunction {
 
     private WinningLinesPositions winningLinesPositions;
+    private PlayerStrategy playerStrategy;
 
-    public EvaluationFunction(WinningLinesPositions winningLinesPositions) {
+    public EvaluationFunction(WinningLinesPositions winningLinesPositions, PlayerStrategy playerStrategy) {
         this.winningLinesPositions = winningLinesPositions;
+        this.playerStrategy = playerStrategy;
     }
 
     public int evaluate(Board3D board3D, Symbol aiPlayerSymbol, Symbol enemySymbol) {
@@ -27,9 +29,9 @@ public class EvaluationFunction {
             boolean hasEnemyPointsOnly = enemySymbolCount > 0 && aiPlayerSymbolCount == 0;
 
             if (hasAiPlayerPointsOnly)
-                points += Math.pow(11, aiPlayerSymbolCount);
+                points += Math.pow(playerStrategy.getAiPointBase(), aiPlayerSymbolCount);
             else if (hasEnemyPointsOnly)
-                points -= Math.pow(10, enemySymbolCount);
+                points -= Math.pow(playerStrategy.getEnemyPointBase(), enemySymbolCount);
         }
 
         return points;

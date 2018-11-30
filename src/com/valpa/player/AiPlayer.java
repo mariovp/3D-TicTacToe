@@ -13,10 +13,10 @@ public class AiPlayer extends Player {
     private Board3D board3D;
     private EvaluationFunction evaluationFunction;
 
-    public AiPlayer(Board3D board3D, Symbol symbol) {
+    public AiPlayer(Board3D board3D, Symbol symbol, PlayerStrategy playerStrategy) {
         super(symbol);
         this.board3D = board3D;
-        this.evaluationFunction = new EvaluationFunction(WinningLinesPositions.getInstance());
+        this.evaluationFunction = new EvaluationFunction(WinningLinesPositions.getInstance(), playerStrategy);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class AiPlayer extends Player {
     }
 
     private PlayerMove negaMax() {
-        return negaMax(board3D, 0, 2,1);
+        return negaMax(board3D, 0, 2, 1);
     }
 
     private PlayerMove negaMax(Board3D currentBoard, int movePosition, int lookAhead, int pov) {
@@ -37,7 +37,7 @@ public class AiPlayer extends Player {
         }
 
         List<PlayerMove> playerMoveList = freePositionList.stream().map(position ->
-                negaMax(currentBoard, position, lookAhead-1, -pov)
+                negaMax(currentBoard, position, lookAhead - 1, -pov)
         ).collect(Collectors.toList());
 
         PlayerMove playerMove;
