@@ -29,7 +29,9 @@ public class AiPlayer extends Player {
     }
 
     private PlayerMove negaMax(Board3D currentBoard, int movePosition, int lookAhead, int pov) {
+
         List<Integer> freePositionList = currentBoard.getFreePositionList();
+
         if (lookAhead == 0 || freePositionList.size() == 0) {
             Board3D newBoard = Board3D.createBoardWithMove(currentBoard, movePosition, enemySymbol);
             int points = pov * evaluationFunction.evaluate(newBoard, symbol, enemySymbol);
@@ -40,15 +42,7 @@ public class AiPlayer extends Player {
                 negaMax(currentBoard, position, lookAhead - 1, -pov)
         ).collect(Collectors.toList());
 
-        PlayerMove playerMove;
-        if (pov == 1)
-            playerMove = playerMoveList.stream()
-                    .max(Comparator.comparingInt(PlayerMove::getPoints)).get();
-        else
-            playerMove = playerMoveList.stream()
-                    .min(Comparator.comparingInt(PlayerMove::getPoints)).get();
-
-        return playerMove;
+        return playerMoveList.stream().max(Comparator.comparing(pm -> pm.getPoints() * pov)).get();
     }
 
 }
