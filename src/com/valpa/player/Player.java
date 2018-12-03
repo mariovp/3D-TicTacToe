@@ -12,6 +12,14 @@ public abstract class Player {
         this.enemySymbol = this.symbol == Symbol.CROSS ? Symbol.CIRCLE : Symbol.CROSS;
     }
 
+    public Symbol getSymbol() {
+        return symbol;
+    }
+
+    public Symbol getEnemySymbol() {
+        return enemySymbol;
+    }
+
     public abstract PlayerMove makeMove();
 
 }
