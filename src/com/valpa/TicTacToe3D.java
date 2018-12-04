@@ -69,8 +69,18 @@ public class TicTacToe3D {
         while (!board3D.getFreePositionList().isEmpty()) {
 
             for (Player player : playerList) {
-                PlayerMove playerMove = player.makeMove();
-                board3D.setCell(playerMove.getPosition(), player.getSymbol());
+
+                boolean isValidMovement = false;
+                PlayerMove playerMove = null;
+                while (!isValidMovement) {
+                    playerMove = player.makeMove();
+                    try {
+                        board3D.setCell(playerMove.getPosition(), player.getSymbol());
+                        isValidMovement = true;
+                    } catch (RuntimeException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
 
                 System.out.println("Movimiento: "+playerMove);
                 System.out.println(board3D);

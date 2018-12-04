@@ -27,24 +27,35 @@ public class AiPlayer extends Player {
     private PlayerMove negaMax() {
         if (board3D.getFreePositionList().isEmpty())
             throw new RuntimeException("El tablero está lleno, no se puede hacer movimiento");
-        return negaMax(board3D, 0, 2, 1);
+
+        SearchNode searchNode = new SearchNode(board3D, new PlayerMove(0,0));
+        return negaMax(searchNode, 1, 1).getPlayerMove();
     }
 
-    private PlayerMove negaMax(Board3D currentBoard, int movePosition, int lookAhead, int pov) {
+    private SearchNode negaMax(SearchNode currentState, int lookAhead, int pov) {
 
-        List<Integer> freePositionList = currentBoard.getFreePositionList();
+        List<Integer> freePositionList = currentState.getBoard3D().getFreePositionList();
 
         if (lookAhead == 0 || freePositionList.isEmpty()) {
-            Board3D newBoard = Board3D.createBoardWithMove(currentBoard, movePosition, enemySymbol);
-            int points = pov * evaluationFunction.evaluate(newBoard, symbol, enemySymbol);
-            return new PlayerMove(movePosition, points);
+            Symbol currentPlayerSymbol = pov == 1 ? symbol : enemySymbol;
+            Symbol currentEnemySymbol = pov == -1 ? symbol : enemySymbol;
+            int points = pov * evaluationFunction.evaluate(currentState.getBoard3D(), currentPlayerSymbol, currentEnemySymbol);
+            currentState.getPlayerMove().setPoints(points);
+            return currentState;
         }
 
-        List<PlayerMove> playerMoveList = freePositionList.stream().map(position ->
-                negaMax(currentBoard, position, lookAhead - 1, -pov)
+        Symbol symbolToPut = pov == 1 ? symbol : enemySymbol;
+
+        List<SearchNode> childStates = freePositionList.stream().map(position -> {
+                    Board3D newBoard = Board3D.createBoardWithMove(currentState.getBoard3D(), position, symbolToPut);
+                    PlayerMove playerMove = new PlayerMove(position, 0);
+                    return new SearchNode(newBoard, playerMove);
+                }
         ).collect(Collectors.toList());
 
-        return playerMoveList.stream().max(Comparator.comparing(pm -> pm.getPoints() * pov)).get();
+        return childStates.stream()
+                .map(searchNode -> negaMax(searchNode, lookAhead -1, -pov))
+                .max(Comparator.comparing(sn -> sn.getPlayerMove().getPoints() * pov)).get();
     }
 
 }

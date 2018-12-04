@@ -31,9 +31,9 @@ public class EvaluationFunction {
             boolean hasEnemyPointsOnly = enemySymbolCount > 0 && aiPlayerSymbolCount == 0;
 
             if (hasAiPlayerPointsOnly)
-                points += Math.pow(playerStrategy.getAiPointBase(), aiPlayerSymbolCount);
+                points += Math.pow(11, aiPlayerSymbolCount);
             else if (hasEnemyPointsOnly)
-                points -= Math.pow(playerStrategy.getEnemyPointBase(), enemySymbolCount);
+                points -= Math.pow(10, enemySymbolCount);
         }
 
         return points;
