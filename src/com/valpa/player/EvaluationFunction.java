@@ -9,11 +9,9 @@ import java.util.Arrays;
 public class EvaluationFunction {
 
     private WinningLinesPositions winningLinesPositions;
-    private PlayerStrategy playerStrategy;
 
-    public EvaluationFunction(WinningLinesPositions winningLinesPositions, PlayerStrategy playerStrategy) {
+    public EvaluationFunction(WinningLinesPositions winningLinesPositions) {
         this.winningLinesPositions = winningLinesPositions;
-        this.playerStrategy = playerStrategy;
     }
 
     public int evaluate(Board3D board3D, Symbol aiPlayerSymbol, Symbol enemySymbol) {

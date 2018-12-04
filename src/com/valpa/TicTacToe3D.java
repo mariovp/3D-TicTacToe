@@ -2,7 +2,10 @@ package com.valpa;
 
 import com.valpa.board.Board3D;
 import com.valpa.board.Symbol;
-import com.valpa.player.*;
+import com.valpa.player.AiPlayer;
+import com.valpa.player.HumanPlayer;
+import com.valpa.player.Player;
+import com.valpa.player.PlayerMove;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,7 +54,7 @@ public class TicTacToe3D {
         Symbol aiSymbol = askAiSymbol();
         boolean isAiFirst = isAiFirst();
 
-        var aiPlayer = new AiPlayer(board3D, aiSymbol, PlayerStrategy.DEFENSE);
+        var aiPlayer = new AiPlayer(board3D, aiSymbol);
         var enemyPlayer = new HumanPlayer(aiPlayer.getEnemySymbol());
 
         List<Player> playerList = new ArrayList<>();

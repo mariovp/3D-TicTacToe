@@ -13,10 +13,10 @@ public class AiPlayer extends Player {
     private Board3D board3D;
     private EvaluationFunction evaluationFunction;
 
-    public AiPlayer(Board3D board3D, Symbol symbol, PlayerStrategy playerStrategy) {
+    public AiPlayer(Board3D board3D, Symbol symbol) {
         super(symbol);
         this.board3D = board3D;
-        this.evaluationFunction = new EvaluationFunction(WinningLinesPositions.getInstance(), playerStrategy);
+        this.evaluationFunction = new EvaluationFunction(WinningLinesPositions.getInstance());
     }
 
     @Override
