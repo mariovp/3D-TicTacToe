@@ -64,9 +64,11 @@ public class TicTacToe3D {
 
         System.out.println("Comienza el juego");
 
+        int turnCount = 0;
         System.out.println(board3D);
         gameLoop:
         while (!board3D.getFreePositionList().isEmpty()) {
+            System.out.println("Turno "+(++turnCount));
 
             for (Player player : playerList) {
 
@@ -92,7 +94,6 @@ public class TicTacToe3D {
                         System.out.println(AsciiArt.tableCat);
                         System.out.println(AsciiArt.iWon);
                     }
-
 
                     break gameLoop;
                 }
