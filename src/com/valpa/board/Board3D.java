@@ -16,7 +16,7 @@ public class Board3D {
 
     public static Board3D createBoardWithMove(Board3D board3D, int position, Symbol symbol) {
         Board3D newBoard = new Board3D(board3D.cubeArray, board3D.freePositionList);
-        newBoard.setCell(position, symbol);
+        newBoard.setCellUnchecked(position, symbol);
         return newBoard;
     }
 
@@ -41,10 +41,14 @@ public class Board3D {
 
     public void setCell(int position, Symbol symbol) {
         if (cubeArray[position] == Symbol.EMPTY) {
-            cubeArray[position] = symbol;
-            freePositionList.remove((Integer)position);
+            setCellUnchecked(position, symbol);
         } else
             throw new RuntimeException("La celda ya está ocupada");
+    }
+
+    private void setCellUnchecked(int position, Symbol symbol) {
+        cubeArray[position] = symbol;
+        freePositionList.remove((Integer)position);
     }
 
     public Symbol getCubeCell(int position) {
