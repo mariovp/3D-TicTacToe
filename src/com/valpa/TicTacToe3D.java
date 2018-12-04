@@ -2,10 +2,7 @@ package com.valpa;
 
 import com.valpa.board.Board3D;
 import com.valpa.board.Symbol;
-import com.valpa.player.AiPlayer;
-import com.valpa.player.HumanPlayer;
-import com.valpa.player.Player;
-import com.valpa.player.PlayerMove;
+import com.valpa.player.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -90,6 +87,13 @@ public class TicTacToe3D {
 
                 if (board3D.checkWin(player.getSymbol())) {
                     System.out.println("El jugador con el simbolo " + player.getSymbol() + " ganó");
+
+                    if (player.getSymbol() == aiPlayer.getSymbol()) {
+                        System.out.println(AsciiArt.tableCat);
+                        System.out.println(AsciiArt.iWon);
+                    }
+
+
                     break gameLoop;
                 }
             }
