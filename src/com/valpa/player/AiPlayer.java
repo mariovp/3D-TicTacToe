@@ -6,9 +6,12 @@ import com.valpa.board.WinningLinesPositions;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AiPlayer extends Player {
+
+    private final int LOOKAHEAD = 3;
 
     private Board3D board3D;
     private EvaluationFunction evaluationFunction;
@@ -29,7 +32,7 @@ public class AiPlayer extends Player {
             throw new RuntimeException("El tablero está lleno, no se puede hacer movimiento");
 
         SearchNode searchNode = new SearchNode(board3D, new PlayerMove(0,0));
-        return negaMax(searchNode, 1, 1).getPlayerMove();
+        return negaMax(searchNode, LOOKAHEAD, 1).getPlayerMove();
     }
 
     private SearchNode negaMax(SearchNode currentState, int lookAhead, int pov) {
@@ -53,9 +56,20 @@ public class AiPlayer extends Player {
                 }
         ).collect(Collectors.toList());
 
-        return childStates.stream()
-                .map(searchNode -> negaMax(searchNode, lookAhead -1, -pov))
-                .max(Comparator.comparing(sn -> sn.getPlayerMove().getPoints() * pov)).get();
+        Optional<SearchNode> winningMove = Optional.empty();
+
+        if (freePositionList.size() < 57 && lookAhead == LOOKAHEAD) {
+            childStates.forEach(searchNode -> {
+                int points = evaluationFunction.evaluate(searchNode.getBoard3D(), symbol, enemySymbol);
+                searchNode.getPlayerMove().setPoints(points);
+            });
+            winningMove = childStates.stream().filter(searchNode -> searchNode.getPlayerMove().getPoints() == Integer.MAX_VALUE).findFirst();
+        }
+
+        return winningMove.orElseGet(() -> childStates.stream()
+                .map(searchNode -> negaMax(searchNode, lookAhead - 1, -pov))
+                .max(Comparator.comparing(sn -> sn.getPlayerMove().getPoints() * pov)).get());
+
     }
 
 }

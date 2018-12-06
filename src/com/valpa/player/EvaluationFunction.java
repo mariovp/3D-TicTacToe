@@ -4,8 +4,6 @@ import com.valpa.board.Board3D;
 import com.valpa.board.Symbol;
 import com.valpa.board.WinningLinesPositions;
 
-import java.util.Arrays;
-
 public class EvaluationFunction {
 
     private WinningLinesPositions winningLinesPositions;
@@ -20,18 +18,30 @@ public class EvaluationFunction {
 
         for (int[] winLine : winningLinesPositions.getWinningLinesPositionArray()) {
 
-            int aiPlayerSymbolCount = (int) Arrays.stream(winLine)
-                    .filter(position -> board3D.getCubeCell(position) == aiPlayerSymbol).count();
-            int enemySymbolCount = (int) Arrays.stream(winLine)
-                    .filter(position -> board3D.getCubeCell(position) == enemySymbol).count();
+            int aiCount = 0;
+            int enemyCount = 0;
 
-            boolean hasAiPlayerPointsOnly = aiPlayerSymbolCount > 0 && enemySymbolCount == 0;
-            boolean hasEnemyPointsOnly = enemySymbolCount > 0 && aiPlayerSymbolCount == 0;
+            for (int pos : winLine) {
+                if (board3D.getCubeCell(pos) == aiPlayerSymbol)
+                    aiCount++;
+                else if (board3D.getCubeCell(pos) == enemySymbol)
+                    enemyCount++;
+            }
 
-            if (hasAiPlayerPointsOnly)
-                points += Math.pow(110, aiPlayerSymbolCount-1);
-            else if (hasEnemyPointsOnly)
-                points -= Math.pow(100, enemySymbolCount-1);
+            if (aiCount == 4)
+                return Integer.MAX_VALUE;
+            else if (enemyCount == 4)
+                return Integer.MIN_VALUE;
+
+            boolean hasOnePlayerOnly = (aiCount > 0 && enemyCount == 0) || (enemyCount > 0 && aiCount == 0);
+
+            if (hasOnePlayerOnly) {
+                if (aiCount > 0)
+                    points += Math.pow(110, aiCount-1);
+                else
+                    points -= Math.pow(100, enemyCount-1);
+            }
+
         }
 
         return points;
