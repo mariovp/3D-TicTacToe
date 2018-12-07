@@ -30,16 +30,14 @@ public class EvaluationFunction {
 
             if (aiCount == 4)
                 return Integer.MAX_VALUE;
-            else if (enemyCount == 4)
-                return Integer.MIN_VALUE;
 
             boolean hasOnePlayerOnly = (aiCount > 0 && enemyCount == 0) || (enemyCount > 0 && aiCount == 0);
 
             if (hasOnePlayerOnly) {
                 if (aiCount > 0)
-                    points += Math.pow(110, aiCount-1);
+                    points += Math.pow(100, aiCount-1);
                 else
-                    points -= Math.pow(100, enemyCount-1);
+                    points -= Math.pow(110, enemyCount-1);
             }
 
         }

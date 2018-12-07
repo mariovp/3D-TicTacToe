@@ -6,12 +6,11 @@ import com.valpa.board.WinningLinesPositions;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AiPlayer extends Player {
 
-    private final int LOOKAHEAD = 3;
+    private final int LOOKAHEAD = 1;
 
     private Board3D board3D;
     private EvaluationFunction evaluationFunction;
@@ -57,7 +56,7 @@ public class AiPlayer extends Player {
         ).collect(Collectors.toList());
 
         // Validación de movimiento ganador en profundidad inicial (funciona para LOOKAHEAD mayor a 1)
-        Optional<SearchNode> winningMove = Optional.empty();
+        /*Optional<SearchNode> winningMove = Optional.empty();
 
         if (freePositionList.size() < 57 && lookAhead == LOOKAHEAD) {
             childStates.forEach(searchNode -> {
@@ -65,11 +64,11 @@ public class AiPlayer extends Player {
                 searchNode.getPlayerMove().setPoints(points);
             });
             winningMove = childStates.stream().filter(searchNode -> searchNode.getPlayerMove().getPoints() == Integer.MAX_VALUE).findFirst();
-        }
+        }*/
 
-        return winningMove.orElseGet(() -> childStates.stream()
+        return childStates.stream()
                 .map(searchNode -> negaMax(searchNode, lookAhead - 1, -pov))
-                .max(Comparator.comparing(sn -> sn.getPlayerMove().getPoints() * pov)).get());
+                .max(Comparator.comparing(sn -> sn.getPlayerMove().getPoints() * pov)).get();
 
     }
 
