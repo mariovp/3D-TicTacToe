@@ -24,10 +24,12 @@ public class PlayerMove {
 
     @Override
     public String toString() {
-        return "PlayerMove{" +
-                "position=" + position +
-                ", points=" + points +
-                '}';
+
+        int z = position / 16;
+        int y = (position - z*16) / 4;
+        int x = position % 4;
+
+        return "("+z+", "+y+", "+x+")";
     }
 
 }

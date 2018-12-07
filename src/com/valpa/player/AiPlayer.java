@@ -4,13 +4,12 @@ import com.valpa.board.Board3D;
 import com.valpa.board.Symbol;
 import com.valpa.board.WinningLinesPositions;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class AiPlayer extends Player {
 
-    private final int LOOKAHEAD = 1;
+    private final int LOOKAHEAD = 3;
 
     private Board3D board3D;
     private EvaluationFunction evaluationFunction;
@@ -23,30 +22,28 @@ public class AiPlayer extends Player {
 
     @Override
     public PlayerMove makeMove() {
-        return negaMax();
+        return miniMax();
     }
 
-    private PlayerMove negaMax() {
+    private PlayerMove miniMax() {
         if (board3D.getFreePositionList().isEmpty())
             throw new RuntimeException("El tablero está lleno, no se puede hacer movimiento");
 
-        SearchNode searchNode = new SearchNode(board3D, new PlayerMove(0,0));
-        return negaMax(searchNode, LOOKAHEAD, 1).getPlayerMove();
+        SearchNode searchNode = new SearchNode(board3D, new PlayerMove(-1,0));
+        return miniMax(searchNode, LOOKAHEAD, true).getPlayerMove();
     }
 
-    private SearchNode negaMax(SearchNode currentState, int lookAhead, int pov) {
+    private SearchNode miniMax(SearchNode currentState, int lookAhead, boolean isMaximizing) {
 
         List<Integer> freePositionList = currentState.getBoard3D().getFreePositionList();
 
         if (lookAhead == 0 || freePositionList.isEmpty()) {
-            Symbol currentPlayerSymbol = pov == 1 ? symbol : enemySymbol;
-            Symbol currentEnemySymbol = pov == -1 ? symbol : enemySymbol;
-            int points = pov * evaluationFunction.evaluate(currentState.getBoard3D(), currentPlayerSymbol, currentEnemySymbol);
+            int points = evaluationFunction.evaluate(currentState.getBoard3D(), symbol, enemySymbol);
             currentState.getPlayerMove().setPoints(points);
             return currentState;
         }
 
-        Symbol symbolToPut = pov == 1 ? symbol : enemySymbol;
+        Symbol symbolToPut = isMaximizing ? symbol : enemySymbol;
 
         List<SearchNode> childStates = freePositionList.stream().map(position -> {
                     Board3D newBoard = Board3D.createBoardWithMove(currentState.getBoard3D(), position, symbolToPut);
@@ -55,20 +52,29 @@ public class AiPlayer extends Player {
                 }
         ).collect(Collectors.toList());
 
-        // Validación de movimiento ganador en profundidad inicial (funciona para LOOKAHEAD mayor a 1)
-        /*Optional<SearchNode> winningMove = Optional.empty();
-
-        if (freePositionList.size() < 57 && lookAhead == LOOKAHEAD) {
-            childStates.forEach(searchNode -> {
-                int points = evaluationFunction.evaluate(searchNode.getBoard3D(), symbol, enemySymbol);
-                searchNode.getPlayerMove().setPoints(points);
-            });
-            winningMove = childStates.stream().filter(searchNode -> searchNode.getPlayerMove().getPoints() == Integer.MAX_VALUE).findFirst();
-        }*/
-
-        return childStates.stream()
-                .map(searchNode -> negaMax(searchNode, lookAhead - 1, -pov))
-                .max(Comparator.comparing(sn -> sn.getPlayerMove().getPoints() * pov)).get();
+        if (isMaximizing) {
+            SearchNode maxState = new SearchNode(null, new PlayerMove(-1, Integer.MIN_VALUE));
+            for (SearchNode childState : childStates) {
+                int value = miniMax(childState, lookAhead -1, false).getPlayerMove().getPoints();
+                int max = Math.max(maxState.getPlayerMove().getPoints(), value);
+                if (value == max) {
+                    childState.getPlayerMove().setPoints(value);
+                    maxState = childState;
+                }
+            }
+            return maxState;
+        } else {
+            SearchNode minState = new SearchNode(null, new PlayerMove(-1, Integer.MAX_VALUE));
+            for (SearchNode childState : childStates) {
+                int value = miniMax(childState, lookAhead -1, false).getPlayerMove().getPoints();
+                int max = Math.min(minState.getPlayerMove().getPoints(), value);
+                if (value == max) {
+                    childState.getPlayerMove().setPoints(value);
+                    minState = childState;
+                }
+            }
+            return minState;
+        }
 
     }
 
