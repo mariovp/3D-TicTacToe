@@ -56,6 +56,7 @@ public class AiPlayer extends Player {
                 }
         ).collect(Collectors.toList());
 
+        // Validación de movimiento ganador en profundidad inicial (funciona para LOOKAHEAD mayor a 1)
         Optional<SearchNode> winningMove = Optional.empty();
 
         if (freePositionList.size() < 57 && lookAhead == LOOKAHEAD) {
