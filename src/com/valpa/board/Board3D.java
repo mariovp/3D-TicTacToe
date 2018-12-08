@@ -48,6 +48,7 @@ public class Board3D {
 
     private void setCellUnchecked(int position, Symbol symbol) {
         cubeArray[position] = symbol;
+        // Se elimina el objeto Integer que sea equals, no la posición
         freePositionList.remove((Integer)position);
     }
 

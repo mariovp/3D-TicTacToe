@@ -55,9 +55,8 @@ public class AiPlayer extends Player {
         if (isMaximizing) {
             SearchNode maxState = new SearchNode(null, new PlayerMove(-1, Integer.MIN_VALUE));
             for (SearchNode childState : childStates) {
-                int value = miniMax(childState, lookAhead -1, false).getPlayerMove().getPoints();
-                int max = Math.max(maxState.getPlayerMove().getPoints(), value);
-                if (value == max) {
+                int value = miniMax(childState, lookAhead - 1, false).getPlayerMove().getPoints();
+                if (value > maxState.getPlayerMove().getPoints()) {
                     childState.getPlayerMove().setPoints(value);
                     maxState = childState;
                 }
@@ -66,9 +65,8 @@ public class AiPlayer extends Player {
         } else {
             SearchNode minState = new SearchNode(null, new PlayerMove(-1, Integer.MAX_VALUE));
             for (SearchNode childState : childStates) {
-                int value = miniMax(childState, lookAhead -1, false).getPlayerMove().getPoints();
-                int max = Math.min(minState.getPlayerMove().getPoints(), value);
-                if (value == max) {
+                int value = miniMax(childState, lookAhead -1, true).getPlayerMove().getPoints();
+                if (value < minState.getPlayerMove().getPoints()) {
                     childState.getPlayerMove().setPoints(value);
                     minState = childState;
                 }
