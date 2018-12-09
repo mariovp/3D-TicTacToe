@@ -1,6 +1,8 @@
 package com.valpa.player;
 
 import com.valpa.board.Board3D;
+import com.valpa.board.Symbol;
+import com.valpa.board.WinningLinesPositions;
 
 public class SearchNode {
 
@@ -18,6 +20,23 @@ public class SearchNode {
 
     public PlayerMove getPlayerMove() {
         return playerMove;
+    }
+
+    public boolean isTerminalNode() {
+
+        for (int[] winLine : WinningLinesPositions.getInstance().getWinningLinesPositionArray()) {
+
+            Symbol one = board3D.getCubeCell(winLine[0]);
+            Symbol two = board3D.getCubeCell(winLine[1]);
+            Symbol three = board3D.getCubeCell(winLine[2]);
+            Symbol four = board3D.getCubeCell(winLine[3]);
+
+            if (one != Symbol.EMPTY && one == two && two == three && three == four)
+                return true;
+
+        }
+
+        return false;
     }
 
 }

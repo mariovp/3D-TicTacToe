@@ -37,7 +37,7 @@ public class AiPlayer extends Player {
 
         List<Integer> freePositionList = currentState.getBoard3D().getFreePositionList();
 
-        if (lookAhead == 0 || freePositionList.isEmpty()) {
+        if (lookAhead == 0 || freePositionList.isEmpty() || currentState.isTerminalNode()) {
             int points = evaluationFunction.evaluate(currentState.getBoard3D(), symbol, enemySymbol);
             currentState.getPlayerMove().setPoints(points);
             return currentState;
@@ -56,7 +56,7 @@ public class AiPlayer extends Player {
             SearchNode maxState = new SearchNode(null, new PlayerMove(-1, Integer.MIN_VALUE));
             for (SearchNode childState : childStates) {
                 int value = miniMax(childState, lookAhead - 1, false).getPlayerMove().getPoints();
-                if (value > maxState.getPlayerMove().getPoints()) {
+                if (value >= maxState.getPlayerMove().getPoints()) {
                     childState.getPlayerMove().setPoints(value);
                     maxState = childState;
                 }
