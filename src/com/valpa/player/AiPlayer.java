@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class AiPlayer extends Player {
 
-    private final int LOOKAHEAD = 3;
+    private final int LOOKAHEAD = 4;
 
     private Board3D board3D;
     private EvaluationFunction evaluationFunction;
@@ -30,10 +30,10 @@ public class AiPlayer extends Player {
             throw new RuntimeException("El tablero está lleno, no se puede hacer movimiento");
 
         SearchNode searchNode = new SearchNode(board3D, new PlayerMove(-1,0));
-        return miniMax(searchNode, LOOKAHEAD, true).getPlayerMove();
+        return miniMax(searchNode, LOOKAHEAD, Integer.MIN_VALUE, Integer.MAX_VALUE, true).getPlayerMove();
     }
 
-    private SearchNode miniMax(SearchNode currentState, int lookAhead, boolean isMaximizing) {
+    private SearchNode miniMax(SearchNode currentState, int lookAhead, int alpha, int beta, boolean isMaximizing) {
 
         List<Integer> freePositionList = currentState.getBoard3D().getFreePositionList();
 
@@ -55,21 +55,29 @@ public class AiPlayer extends Player {
         if (isMaximizing) {
             SearchNode maxState = new SearchNode(null, new PlayerMove(-1, Integer.MIN_VALUE));
             for (SearchNode childState : childStates) {
-                int value = miniMax(childState, lookAhead - 1, false).getPlayerMove().getPoints();
-                if (value >= maxState.getPlayerMove().getPoints()) {
+                int value = miniMax(childState, lookAhead - 1, alpha, beta, false).getPlayerMove().getPoints();
+                if (value > maxState.getPlayerMove().getPoints()) {
                     childState.getPlayerMove().setPoints(value);
                     maxState = childState;
                 }
+                // Poda
+                alpha = Math.max(alpha, value);
+                if (alpha >= beta)
+                    break;
             }
             return maxState;
         } else {
             SearchNode minState = new SearchNode(null, new PlayerMove(-1, Integer.MAX_VALUE));
             for (SearchNode childState : childStates) {
-                int value = miniMax(childState, lookAhead -1, true).getPlayerMove().getPoints();
+                int value = miniMax(childState, lookAhead -1, alpha, beta, true).getPlayerMove().getPoints();
                 if (value < minState.getPlayerMove().getPoints()) {
                     childState.getPlayerMove().setPoints(value);
                     minState = childState;
                 }
+                // Poda
+                beta = Math.min(beta, value);
+                if (alpha >= beta)
+                    break;
             }
             return minState;
         }
