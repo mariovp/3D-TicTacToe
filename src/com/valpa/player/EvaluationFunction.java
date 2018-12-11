@@ -29,9 +29,9 @@ public class EvaluationFunction {
             }
 
             if (aiCount == 4)
-                return Integer.MAX_VALUE;
+                return Integer.MAX_VALUE-1;
             else if (enemyCount == 4)
-                return Integer.MIN_VALUE;
+                return Integer.MIN_VALUE+1;
 
             boolean hasOnePlayerOnly = (aiCount > 0 && enemyCount == 0) || (enemyCount > 0 && aiCount == 0);
 
